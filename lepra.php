@@ -169,7 +169,8 @@ class Uploadfile
         if (dir($uploadfiledir)) {
             self::$uploadfiledir = $uploadfiledir;
         } else {
-            self::$uploadfiledir = false;
+            if (!mkdir($uploadfiledir))
+                self::$uploadfiledir = false;
         }
     }
 
@@ -177,7 +178,7 @@ class Uploadfile
     public static function print()
     {
         if (is_array(self::$fileArr) && count(self::$fileArr) !== 0 && self::$fileArr["name"]) {
-            echo "<pre>";
+            echo "<pre class='p-10 bo-dark m-center color-light' style='white-space: break-spaces; overflow: hidden;'>";
             $array_keys = array_keys(self::$fileArr);
             $ik = 0;
             foreach (self::$fileArr as $item) {
@@ -218,7 +219,7 @@ class Uploadfile
     {
         if (self::preparation() && self::$uploadfiledir) {
             if (move_uploaded_file(self::$fileArr["tmp_name"], self::$newdirname)) {
-                echo "<pre>" . "done ..." . "</pre>";
+                echo "<div class='alert bgct-green'> done. </div>";
             }
         }
     }
